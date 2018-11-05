@@ -9,10 +9,13 @@ if (isset($_GET['p'])){
     $p = 'home';
 }
 
+//initialisation des objets
+$db = new App\Database('phptestsmallapp');
+
 ob_start();
 if ($p === 'home'){
     require '../pages/home.php';
-}elseif ($p === 'single'){
+}elseif ($p === 'article'){
     require '../pages/single.php';
 }
 $content = ob_get_clean();
