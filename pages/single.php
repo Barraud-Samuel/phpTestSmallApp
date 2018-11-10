@@ -1,9 +1,19 @@
 <?php
 
+use App\App;
+use App\Table\Article;
+use App\table\Categorie;
+
 //requete preparé (protege des injec sql)
-$post = App\App::getDb()->prepare('SELECT * FROM articles WHERE id = ?',[$_GET['id']],'App\Table\Article',true);
-//TODO https://youtu.be/3pACUHqop9U?list=PLjwdMgw5TTLVDKy8ikf5Df5fnMqY-ec16
+$post = Article::find($_GET['id']);
+if ($post === false){
+    App::notFound();
+}
+
+App::setTitle($post->titre);
+
 ?>
 
 <h1><?= $post->titre; ?></h1>
+<p><em><?= $post->categorie ?></em></p>
 <p><?= $post->contenu; ?></p>

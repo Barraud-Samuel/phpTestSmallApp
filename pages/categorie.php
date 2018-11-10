@@ -1,6 +1,22 @@
+<?php
+use App\table\Article;
+use App\table\Categorie;
+use App\app;
+
+$categorie = Categorie::find($_GET['id']);
+if ($categorie === false){
+    App::notfound();
+}
+
+$articles = Article::lastByCategory($_GET['id']);
+$categories = Categorie::all();
+?>
+
+<h1><?= $categorie->titre ?></h1>
+
 <div class="row">
     <div class="col-sm-8">
-        <?php foreach (App\Table\Article::getLast() as $post): ?>
+        <?php foreach ($articles as $post): ?>
 
             <h2><a href="<?= $post->url ?>"><?= $post->titre; ?></a></h2>
             <p><em><?= $post->categorie; ?></em></p>
@@ -10,14 +26,9 @@
     </div>
     <div class="col-sm-4">
         <ul>
-            <?php foreach (App\Table\Categorie::all() as $categorie): ?>
+            <?php foreach (Categorie::all() as $categorie): ?>
                 <li><a href="<?= $categorie->url; ?>"><?= $categorie->titre ?></a></li>
             <?php endforeach; ?>
         </ul>
     </div>
 </div>
-
-<!--TODO::https://youtu.be/3pACUHqop9U?list=PLjwdMgw5TTLVDKy8ikf5Df5fnMqY-ec16&t=381-->
-
-<!--<h1>homepage</h1>
-<a href="index.php?p=single">Single</a>-->
